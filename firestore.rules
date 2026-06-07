@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Global Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isOwner(docData) {
+      return docData.creatorId == request.auth.uid;
+    }
+
+    // --- Entity Validations ---
+
+    function isValidExam(data) {
+      return data.keys().hasAll(['title', 'creatorId', 'createdAt']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.creatorId == request.auth.uid &&
+             (request.method == 'create' ? data.createdAt == request.time : data.createdAt == resource.data.createdAt);
+    }
+
+    function isValidScript(data) {
+      return data.keys().hasAll(['examId', 'creatorId', 'status', 'createdAt', 'updatedAt']) &&
+             data.examId is string &&
+             data.creatorId == request.auth.uid &&
+             data.status in ['pending', 'processing', 'completed'] &&
+             (request.method == 'create' ? (data.createdAt == request.time && data.updatedAt == request.time) : (data.createdAt == resource.data.createdAt && data.updatedAt == request.time));
+    }
+
+    function isValidSegment(data) {
+      return data.keys().hasAll(['scriptId', 'examId', 'creatorId', 'status', 'createdAt', 'updatedAt']) &&
+             data.creatorId == request.auth.uid &&
+             data.status in ['pending', 'reviewed'] &&
+             (request.method == 'create' ? (data.createdAt == request.time && data.updatedAt == request.time) : (data.createdAt == resource.data.createdAt && data.updatedAt == request.time));
+    }
+
+    // --- Collection Routes ---
+
+    match /exams/{examId} {
+      allow list: if isSignedIn() && resource.data.creatorId == request.auth.uid;
+      allow get: if isSignedIn() && resource.data.creatorId == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(examId) && isValidExam(incoming());
+      allow update: if isSignedIn() && isOwner(resource.data) && isValidExam(incoming()) &&
+                      incoming().creatorId == resource.data.creatorId;
+      allow delete: if isSignedIn() && isOwner(resource.data);
+
+      match /scripts/{scriptId} {
+        allow read: if isSignedIn() && resource.data.creatorId == request.auth.uid;
+        allow create: if isSignedIn() && isValidId(scriptId) && isValidScript(incoming()) && exists(/databases/$(database)/documents/exams/$(examId));
+        allow update: if isSignedIn() && resource.data.creatorId == request.auth.uid && isValidScript(incoming());
+        allow delete: if isSignedIn() && resource.data.creatorId == request.auth.uid;
+
+        match /segments/{segmentId} {
+          allow read: if isSignedIn() && resource.data.creatorId == request.auth.uid;
+          allow create: if isSignedIn() && isValidId(segmentId) && isValidSegment(incoming()) && exists(/databases/$(database)/documents/exams/$(examId)/scripts/$(scriptId));
+          allow update: if isSignedIn() && resource.data.creatorId == request.auth.uid && isValidSegment(incoming());
+          allow delete: if isSignedIn() && resource.data.creatorId == request.auth.uid;
+        }
+      }
+    }
+  }
+}

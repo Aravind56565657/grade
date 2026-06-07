@@ -1,0 +1,12 @@
+{
+  "name": "GradeFlow",
+  "description": "AI-Assisted Exam Digitization & Hybrid Evaluation Platform. Convert scanned exam sheets into structured data with AI-assisted grading and human oversight.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "AI OCR",
+    "Automated Grading",
+    "Hybrid Evaluation"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "Exam": {
+      "title": "Exam",
+      "description": "Represents an exam session or subject.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "rubric": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "questionNumber": { "type": "string" },
+                  "questionText": { "type": "string" },
+                  "maxScore": { "type": "number" },
+                  "criteria": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": { "type": "string" },
+                        "description": { "type": "string" },
+                        "points": { "type": "number" }
+                      }
+                    }
+                  },
+                  "exemplaryResponse": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "creatorId": { "type": "string" }
+      },
+      "required": ["title", "creatorId"]
+    },
+    "Script": {
+      "title": "Script",
+      "description": "Represents a student's answer sheet submission.",
+      "type": "object",
+      "properties": {
+        "examId": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "processing", "completed"] },
+        "imageUrls": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["examId", "creatorId", "status"]
+    },
+    "Segment": {
+      "title": "Segment",
+      "description": "An individual question-answer pair extracted from a script.",
+      "type": "object",
+      "properties": {
+        "scriptId": { "type": "string" },
+        "examId": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "questionNumber": { "type": "string" },
+        "questionText": { "type": "string" },
+        "modelAnswer": { "type": "string" },
+        "studentAnswer": { "type": "string" },
+        "isHandwritten": { "type": "boolean" },
+        "aiResult": {
+          "type": "object",
+          "properties": {
+            "score": { "type": "number" },
+            "confidence": { "type": "number" },
+            "feedback": { "type": "string" }
+          }
+        },
+        "humanResult": {
+          "type": "object",
+          "properties": {
+            "score": { "type": "number" },
+            "feedback": { "type": "string" }
+          }
+        },
+        "status": { "type": "string", "enum": ["pending", "reviewed"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["scriptId", "examId", "status"]
+    }
+  },
+  "firestore": {
+    "/exams/{examId}": {
+      "schema": "Exam",
+      "description": "Root collection for exams."
+    },
+    "/exams/{examId}/scripts/{scriptId}": {
+      "schema": "Script",
+      "description": "Scripts belonging to an exam."
+    },
+    "/exams/{examId}/scripts/{scriptId}/segments/{segmentId}": {
+      "schema": "Segment",
+      "description": "Individual evaluation segments for a script."
+    }
+  }
+}
