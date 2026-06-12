@@ -1,0 +1,27 @@
+{
+  "generatedBy": "Noah-AI",
+  "schema": 2,
+  "project": {
+    "name": null,
+    "language": "TypeScript",
+    "appType": "static"
+  },
+  "platform": "vercel",
+  "strategy": "A",
+  "tier": "free",
+  "frontend": {
+    "framework": "Vite",
+    "root": null
+  },
+  "backend": null,
+  "database": {
+    "provider": null
+  },
+  "buildCommand": "npm run build",
+  "startCommand": "npm run preview -- --host 0.0.0.0 --port $PORT",
+  "envRequired": [
+    "APP_URL",
+    "GEMINI_API_KEY"
+  ],
+  "generatedFiles": []
+}
