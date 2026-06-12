@@ -1,0 +1,13 @@
+{
+  "deploymentId": "dpl_Funi4QhTUG9od3DNz2kUjsutPuX5",
+  "sequence": 1,
+  "platform": "vercel",
+  "strategy": "A",
+  "database": null,
+  "status": "success",
+  "commit": "62d9267122a575351d149f9d86929c6b4e8c2c00",
+  "deploymentUrl": "https://grade-ivory.vercel.app",
+  "durationMs": 36371,
+  "generatedFiles": [],
+  "createdAt": "2026-06-12T17:08:00.673Z"
+}
