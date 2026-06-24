@@ -21,7 +21,17 @@
   "startCommand": "npm run preview -- --host 0.0.0.0 --port $PORT",
   "envRequired": [
     "APP_URL",
-    "GEMINI_API_KEY"
+    "FIREBASE_API_KEY",
+    "FIREBASE_APP_ID",
+    "FIREBASE_AUTH_DOMAIN",
+    "FIREBASE_MEASUREMENT_ID",
+    "FIREBASE_MESSAGING_SENDER_ID",
+    "FIREBASE_PROJECT_ID",
+    "FIREBASE_SERVICE_ACCOUNT_KEY",
+    "FIREBASE_STORAGE_BUCKET",
+    "GCLOUD_PROJECT",
+    "GEMINI_API_KEY",
+    "GOOGLE_APPLICATION_CREDENTIALS_JSON"
   ],
   "generatedFiles": []
 }
