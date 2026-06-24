@@ -2,18 +2,18 @@
   "generatedBy": "Noah-AI",
   "schema": 1,
   "lastDeployment": {
-    "deploymentId": "dpl_94JqVcaAMUTHAA97TDJEDxiujtAW",
+    "deploymentId": "dpl_etnEDh74hRFHTDHC3Y6e8PvX8xaF",
     "platform": "vercel",
-    "commit": "45f11c11dfef4c8f2186c9b7d8f454541b20300f",
-    "url": "https://grade-ivory.vercel.app",
+    "commit": "8802aa35863cf77511d9ec814d3375b3414e67f9",
+    "url": "https://grade-snowy-sigma.vercel.app",
     "status": "success",
-    "deployedAt": "2026-06-24T08:15:49.627Z"
+    "deployedAt": "2026-06-24T16:25:02.354Z"
   },
   "lastSuccessfulDeployment": {
-    "deploymentId": "dpl_94JqVcaAMUTHAA97TDJEDxiujtAW",
+    "deploymentId": "dpl_etnEDh74hRFHTDHC3Y6e8PvX8xaF",
     "platform": "vercel",
-    "commit": "45f11c11dfef4c8f2186c9b7d8f454541b20300f",
-    "url": "https://grade-ivory.vercel.app",
-    "deployedAt": "2026-06-24T08:15:49.627Z"
+    "commit": "8802aa35863cf77511d9ec814d3375b3414e67f9",
+    "url": "https://grade-snowy-sigma.vercel.app",
+    "deployedAt": "2026-06-24T16:25:02.354Z"
   }
 }
